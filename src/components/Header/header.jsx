@@ -78,7 +78,7 @@ const Header = () => {
           <BsPerson/>
           <Link  className="sign">{currentUser.email}</Link>
           <button className="logout" onClick={handleLogout}>Đăng xuất</button>
-          <Link to="/" className="post" >Đăng tin</Link>
+          <Link to="/Create_New_Post" className="post" >Đăng tin</Link>
         </div>
 
       ) :

@@ -19,20 +19,22 @@ const Login = () => {
       "email":`${email}`,
       "password":`${pass}`
     }
-    const call = async()=>{
+
+    const call = async () => {
       const response = await axios({
         method: 'post',
         url: 'https://server-real-estate.herokuapp.com/api/v1/users/login',
         data: user,
         type:'json'
-    });
-     console.log(response.data.token);
-     if (response.status==200) {toast.success('Đăng nhập  thành công')};
-   }
+      });
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      localStorage.setItem("tokenUser", JSON.stringify(response.data.token));
+      //  if (response.status==200) {toast.success('Đăng nhập  thành công')};
+    }
     
-   call();
-   localStorage.setItem("currentUser", JSON.stringify(user));
-   navigate("/log-in", { replace: true });
+    call();
+
+    navigate("/log-in", { replace: true });
   }
 
   return (

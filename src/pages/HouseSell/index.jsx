@@ -4,6 +4,7 @@ import axios from "axios";
 import './housesell.css';
 import Listrender from '../../components/Listrender';
 import Sellitem from '../../components/Sellitem';
+import { HTTP } from '../../http-default';
 
 const HouseSell = () => {
 
@@ -13,24 +14,26 @@ const HouseSell = () => {
     const callApi =async()=>{
         setIsLoading(true);
  
-         const response = await axios({
-             method: 'get',
-             url: 'https://server-real-estate.herokuapp.com/api/v1/posts',
-             type: 'json'
-         });
+        // const response = await axios({
+        //     method: 'get',
+        //     url: 'https://server-real-estate.herokuapp.com/api/v1/posts',
+        //     type: 'json'
+        // });
+
+        HTTP.get('api/v1/posts')
+        .then((response) => {
+          if(response.status === 200){
+            setSellList(response.data)
+          }
+        })
  
-         if(response.status === 200){
-             setSellList(response.data.posts)
-         }
-         console.log(sellList);
-         setIsLoading(false);     
+
+        setIsLoading(false);     
      }
  
-     useEffect(()=>{
-         callApi();    
-         
-     },[]);
-     console.log(sellList);
+    useEffect(()=>{
+        callApi();    
+    },[]);
 
   return (
     <div className='house-cell'>
@@ -41,7 +44,7 @@ const HouseSell = () => {
     <div className='main-housesell'>
       <h3>Bán nhà đất trên toàn quốc</h3>
       <p>Hiện có {sellList.length} bất động sản</p><br/>
-      { sellList.length >0 ? 
+      { sellList.length > 0 ? 
        
          (sellList.map(item =>{
         return <Sellitem item={item}/>
